@@ -18,6 +18,35 @@ SortedSet::SortedSet(Relation r) {
 	this->elements = new TElem[capacity];
 }
 
+SortedSet::SortedSet(const SortedSet& other) {
+	this->rel = other.rel;
+	this->capacity = other.capacity;
+	this->len = other.len;
+
+	this->elements = new TElem[this->capacity];
+	for (int i = 0; i < this->len; i++) {
+		this->elements[i] = other.elements[i];
+	}
+}
+
+SortedSet& SortedSet::operator=(const SortedSet& other) {
+	if (this == &other)
+		return *this;
+
+	this->rel = other.rel;
+	this->capacity = other.capacity;
+	this->len = other.len;
+
+	delete[] this->elements;
+	this->elements = new TElem[this->capacity];
+
+	for (int i = 0; i < this->len; i++) {
+		this->elements[i] = other.elements[i];
+	}
+
+	return *this;
+}
+
 bool SortedSet::add(TComp elem) {
 	if (this->capacity == this->len)
 		this->resize();
